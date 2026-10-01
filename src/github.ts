@@ -1,3 +1,4 @@
+import { requestUrl, type RequestUrlResponse } from "obsidian";
 import { parseIssueUrl } from "./link";
 import type { GhIssue, GhLabel, GhProject } from "./types";
 
@@ -49,6 +50,20 @@ export class GitHubError extends Error {
 
 export function isAbortError(error: unknown): boolean {
   return error instanceof Error && error.name === "AbortError";
+}
+
+function abortError(): Error {
+  const error = new Error("The GitHub request was cancelled.");
+  error.name = "AbortError";
+  return error;
+}
+
+function readJson<T>(response: RequestUrlResponse): GraphQLResponse<T> | null {
+  try {
+    return response.json as GraphQLResponse<T> | null;
+  } catch {
+    return null;
+  }
 }
 
 interface GraphQLErrorBody {
@@ -233,14 +248,17 @@ export class GitHubClient {
       throw new GitHubError("Set a GitHub token in plugin settings.", "missing");
     }
 
-    let response: Response;
+    if (signal?.aborted) throw abortError();
+
+    let response: RequestUrlResponse;
     try {
-      response = await fetch(ENDPOINT, {
+      response = await requestUrl({
+        url: ENDPOINT,
         method: "POST",
-        signal,
+        throw: false,
+        contentType: "application/json",
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
           Accept: "application/vnd.github+json",
           "User-Agent": "obsidian-github-issue-mentions",
           "X-GitHub-Api-Version": "2022-11-28",
@@ -251,8 +269,9 @@ export class GitHubClient {
       if (isAbortError(error)) throw error;
       throw new GitHubError("Could not reach GitHub.", "network");
     }
+    if (signal?.aborted) throw abortError();
 
-    const payload = (await response.json().catch(() => null)) as GraphQLResponse<T> | null;
+    const payload = readJson<T>(response);
     const errorText = payload?.errors?.map((error) => error.message ?? "").join(" ") ?? "";
     if (/rate limit/i.test(errorText)) {
       throw new GitHubError("GitHub rate limit reached. Wait a moment and try again.", "api");
@@ -263,7 +282,7 @@ export class GitHubClient {
         "auth",
       );
     }
-    if (!response.ok || !payload) {
+    if (response.status < 200 || response.status >= 300 || !payload) {
       throw new GitHubError(`GitHub request failed (${response.status}).`, "api");
     }
     if (payload.errors?.length) {

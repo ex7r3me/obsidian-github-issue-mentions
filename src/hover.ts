@@ -16,7 +16,7 @@ const SHOW_DELAY_MS = 300;
 const HIDE_DELAY_MS = 400;
 
 export class IssueHover {
-  private popover: HTMLDivElement | null = null;
+  private popover: HTMLElement | null = null;
   private showTimer: number | null = null;
   private hideTimer: number | null = null;
   private pendingUrl: string | null = null;
@@ -117,13 +117,11 @@ export class IssueHover {
     }
   }
 
-  private ensurePopover(): HTMLDivElement {
+  private ensurePopover(): HTMLElement {
     if (this.popover) return this.popover;
-    const popover = document.createElement("div");
-    popover.className = "gh-issue-popover";
+    const popover = document.body.createEl("div", { cls: "gh-issue-popover" });
     popover.addEventListener("mouseenter", () => this.cancelHide());
     popover.addEventListener("mouseleave", () => this.scheduleHide());
-    document.body.appendChild(popover);
     this.popover = popover;
     return popover;
   }
@@ -152,8 +150,10 @@ export class IssueHover {
         const chip = labels.createSpan({ cls: "gh-issue-label", text: label.name });
         const color = safeHex(label.color);
         if (!color) continue;
-        chip.style.backgroundColor = color;
-        chip.style.color = contrastColor(color);
+        chip.setCssProps({
+          "background-color": color,
+          color: contrastColor(color),
+        });
       }
     }
 
@@ -181,18 +181,22 @@ export class IssueHover {
   private place(popover: HTMLElement, anchor: HTMLElement): void {
     const rect = anchorRect(anchor, this.point);
     const margin = 8;
-    popover.style.visibility = "hidden";
-    popover.style.left = "0px";
-    popover.style.top = "0px";
+    popover.setCssProps({
+      visibility: "hidden",
+      left: "0px",
+      top: "0px",
+    });
     const width = popover.offsetWidth;
     const height = popover.offsetHeight;
     let left = rect.left;
     let top = rect.bottom + margin;
     if (left + width > window.innerWidth - margin) left = window.innerWidth - width - margin;
     if (top + height > window.innerHeight - margin) top = rect.top - height - margin;
-    popover.style.left = `${Math.max(margin, left)}px`;
-    popover.style.top = `${Math.max(margin, top)}px`;
-    popover.style.visibility = "visible";
+    popover.setCssProps({
+      left: `${Math.max(margin, left)}px`,
+      top: `${Math.max(margin, top)}px`,
+      visibility: "visible",
+    });
   }
 
   private clearShow(): void {

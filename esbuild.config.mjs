@@ -1,6 +1,6 @@
 import esbuild from "esbuild";
+import { builtinModules } from "node:module";
 import process from "process";
-import builtins from "builtin-modules";
 
 const prod = process.argv[2] === "production";
 
@@ -21,7 +21,7 @@ const context = await esbuild.context({
     "@codemirror/search",
     "@codemirror/state",
     "@codemirror/view",
-    ...builtins,
+    ...builtinModules,
   ],
   format: "cjs",
   target: "es2018",

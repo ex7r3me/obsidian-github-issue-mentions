@@ -1,8 +1,8 @@
 {
   "id": "github-issue-mentions",
   "name": "GitHub Issue Mentions",
-  "version": "1.0.0",
-  "minAppVersion": "1.5.0",
+  "version": "1.0.1",
+  "minAppVersion": "1.13.0",
   "description": "Mention GitHub issues from a project board with gh#, ranked by how often you have linked them, with a hover preview.",
   "author": "Siavash Ahmadpour",
   "authorUrl": "https://github.com/ex7r3me",
