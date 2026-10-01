@@ -1,0 +1,24 @@
+{
+  "name": "github-issue-mentions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Mention GitHub issues from a project board.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ex7r3me/obsidian-github-issue-mentions"
+  },
+  "main": "main.js",
+  "scripts": {
+    "dev": "node esbuild.config.mjs",
+    "build": "tsc -noEmit -skipLibCheck && node esbuild.config.mjs production",
+    "check": "esbuild self-check.ts --bundle --platform=node --format=cjs --outfile=.self-check.cjs && node .self-check.cjs && rm .self-check.cjs"
+  },
+  "devDependencies": {
+    "@codemirror/state": "^6.5.2",
+    "@codemirror/view": "^6.36.4",
+    "builtin-modules": "^4.0.0",
+    "esbuild": "^0.25.5",
+    "obsidian": "^1.8.7",
+    "typescript": "^5.8.3"
+  }
+}

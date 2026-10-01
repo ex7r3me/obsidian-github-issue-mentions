@@ -1,0 +1,122 @@
+.gh-issue-setting-intro {
+  margin-top: 0;
+  color: var(--text-muted);
+}
+
+.gh-issue-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.gh-issue-number {
+  flex: 0 0 auto;
+  font-weight: 600;
+  color: var(--text-accent);
+}
+
+.gh-issue-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.gh-issue-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 2px;
+  font-size: var(--font-ui-smaller, 0.8em);
+  color: var(--text-muted);
+}
+
+.gh-issue-state {
+  font-weight: 600;
+}
+
+.gh-issue-state.is-open {
+  color: var(--color-green, var(--text-accent));
+}
+
+.gh-issue-state.is-closed {
+  color: var(--color-purple, var(--text-muted));
+}
+
+.gh-issue-message {
+  color: var(--text-muted);
+  white-space: normal;
+}
+
+.gh-issue-popover {
+  position: fixed;
+  z-index: calc(var(--layer-popover, 30) + 5);
+  box-sizing: border-box;
+  width: min(380px, calc(100vw - 16px));
+  max-height: min(320px, calc(100vh - 16px));
+  overflow: auto;
+  padding: 12px 14px;
+  border: 1px solid var(--background-modifier-border);
+  border-radius: 8px;
+  background: var(--background-primary);
+  color: var(--text-normal);
+  box-shadow: var(--shadow-s);
+  user-select: text;
+}
+
+.gh-issue-pop-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.gh-issue-pop-link {
+  color: var(--text-accent);
+  font-size: var(--font-ui-smaller, 0.85em);
+  text-decoration: none;
+}
+
+.gh-issue-pop-link:hover {
+  text-decoration: underline;
+}
+
+.gh-issue-pop-title {
+  font-size: 1.05em;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+.gh-issue-pop-repo,
+.gh-issue-pop-updated,
+.gh-issue-pop-message {
+  margin-top: 4px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller, 0.85em);
+}
+
+.gh-issue-pop-labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.gh-issue-label {
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: var(--font-ui-smaller, 0.75em);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.gh-issue-pop-body {
+  margin-top: 8px;
+  color: var(--text-muted);
+  font-size: var(--font-ui-smaller, 0.9em);
+  line-height: 1.45;
+  white-space: pre-wrap;
+}
