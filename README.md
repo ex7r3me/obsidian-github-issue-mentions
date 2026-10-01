@@ -4,7 +4,7 @@ Mention GitHub issues from one project board while you write in Obsidian. The bo
 
 Type `gh#`, then an issue number or words from the title. Pick a result to insert a markdown link. Hover any GitHub issue link for a preview.
 
-Issues you have already linked in the vault rank higher.
+Issues you have linked before rank higher. Mentions you insert are remembered; the plugin does not read the rest of the vault.
 
 ## Install
 

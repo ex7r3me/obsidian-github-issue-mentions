@@ -119,7 +119,7 @@ export class IssueHover {
 
   private ensurePopover(): HTMLElement {
     if (this.popover) return this.popover;
-    const popover = document.body.createEl("div", { cls: "gh-issue-popover" });
+    const popover = document.body.createDiv({ cls: "gh-issue-popover" });
     popover.addEventListener("mouseenter", () => this.cancelHide());
     popover.addEventListener("mouseleave", () => this.scheduleHide());
     this.popover = popover;
@@ -151,8 +151,8 @@ export class IssueHover {
         const color = safeHex(label.color);
         if (!color) continue;
         chip.setCssProps({
-          "background-color": color,
-          color: contrastColor(color),
+          "--gh-issue-label-bg": color,
+          "--gh-issue-label-fg": contrastColor(color),
         });
       }
     }

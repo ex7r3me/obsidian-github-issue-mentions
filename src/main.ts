@@ -59,7 +59,6 @@ export default class GitHubIssueMentionsPlugin extends Plugin {
       this.suggest?.destroy();
       this.hover.destroy();
     });
-    void this.rescanUsage();
   }
 
   async search(query: string, signal: AbortSignal): Promise<Suggestion[]> {
@@ -99,14 +98,5 @@ export default class GitHubIssueMentionsPlugin extends Plugin {
       projectTitle: typeof data.projectTitle === "string" ? data.projectTitle : "",
     };
     this.usageIndex.load(data.usage);
-  }
-
-  private async rescanUsage(): Promise<void> {
-    try {
-      await this.usageIndex.rescan(this.app.vault);
-      await this.saveAll();
-    } catch (error) {
-      console.error("GitHub Issue Mentions failed to scan notes", error);
-    }
   }
 }
