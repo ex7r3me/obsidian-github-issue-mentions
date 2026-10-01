@@ -1,57 +1,76 @@
 # GitHub Issue Mentions
 
-Mention GitHub issues from one project board while you write in Obsidian. The board can include issues from many repositories.
+Search one GitHub Project from a note. Type `gh#`, pick an issue, and insert a link. Hover any GitHub issue link for a preview.
 
-Type `gh#`, then an issue number or words from the title. Pick a result to insert a markdown link. Hover any GitHub issue link for a preview.
+The project can include issues from many repositories. Issues you have linked before appear first.
 
-Issues you have linked before rank higher. Mentions you insert are remembered; the plugin does not read the rest of the vault.
+**[Install in Obsidian](obsidian://show-plugin?id=github-issue-mentions)** · [Plugin page](https://community.obsidian.md/plugins/github-issue-mentions)
 
 ## Install
 
-### Obsidian community plugins
+1. Open **Settings → Community plugins**.
+2. Turn off Restricted mode if Obsidian asks you to.
+3. Choose **Browse**, search for **GitHub Issue Mentions**, then **Install** and **Enable**.
 
-This plugin is not in the community plugin directory yet. Until it is, install it from a GitHub release.
+Obsidian 1.13 or newer. Desktop and mobile.
 
-### Manual
+### Install from a release
 
 1. Download `main.js`, `manifest.json`, and `styles.css` from the [latest release](https://github.com/ex7r3me/obsidian-github-issue-mentions/releases/latest).
-2. Create a folder named `github-issue-mentions` in your vault's `.obsidian/plugins` directory.
-3. Put the three files in that folder.
-4. Reload Obsidian and enable **GitHub Issue Mentions** in **Settings → Community plugins**.
+2. Put them in a folder named `github-issue-mentions` inside your vault's `.obsidian/plugins` directory.
+3. Reload Obsidian and enable **GitHub Issue Mentions**.
 
-### BRAT
-
-You can also install it with the [BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin using `ex7r3me/obsidian-github-issue-mentions`.
-
-## Use
+## Set up
 
 1. Open **Settings → GitHub Issue Mentions**.
-2. Paste a [fine-grained personal access token](https://github.com/settings/personal-access-tokens).
-3. Set the organization that owns the project.
-4. Click **Load projects** and choose the board.
-5. In a note, type `gh#` and a number or title words, for example `gh# 139` or `gh# grafana`.
+2. Paste a [fine-grained personal access token](https://github.com/settings/personal-access-tokens/new).
+3. Enter the organization that owns the project.
+4. Choose **Load projects**, then pick the board.
 
-The command **Insert GitHub issue** inserts `gh#` at the cursor.
+### Token
 
-Choosing a result inserts a link:
+Create the token for that organization. Read-only access is enough.
+
+| Where | What to allow |
+| --- | --- |
+| Repository access | Every repository on the board |
+| Repository permissions | **Issues**: Read-only. **Metadata**: Read-only is added automatically |
+| Organization permissions | **Projects**: Read-only |
+
+If the organization uses single sign-on, authorize the token for that organization.
+
+The token is stored in this plugin's `data.json` in your vault and is used only to read the project and its issues from GitHub.
+
+## Mention an issue
+
+In a note, type `gh#`, then an issue number or words from the title.
+
+| You type | The list shows |
+| --- | --- |
+| `gh# 139` | Issue 139 on the board |
+| `gh# grafana` | Issues whose titles match those words |
+
+Pick a result. The plugin inserts a markdown link:
 
 ```markdown
 [#139 Short title](https://github.com/owner/repo/issues/139)
 ```
 
-Hover that link, or any existing GitHub issue link, to see the state, title, repository, labels, updated date, and a short excerpt.
+The command **Insert GitHub issue** types `gh#` at the cursor.
 
-### Token permissions
+Issues you insert are remembered and listed higher next time.
 
-Create the token for the organization that owns the project. Read-only access is enough.
+## Preview
 
-- Repository access: all repositories on the board, or every repository in the organization
-- Repository permissions: **Issues** Read-only. **Metadata** Read-only is added automatically
-- Organization permissions: **Projects** Read-only
+Hover a GitHub issue link in reading view, live preview, or source mode. The card shows:
 
-If the organization uses single sign-on, authorize the token for that organization.
+- Whether the issue is open or closed
+- Title and `owner/repo#number`
+- Labels
+- When it was last updated
+- A short excerpt
 
-The token is stored in this plugin's `data.json` in your vault. That file is not part of this repository.
+Move the pointer away and the card closes. Press Escape to close it right away.
 
 ## Develop
 
